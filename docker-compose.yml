@@ -1,0 +1,28 @@
+version: "3"
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+      - 9229:9229 # For debugging
+    restart: always
+    depends_on:
+      - database
+    volumes:
+      - "./:/usr/src/app"
+    environment:
+      DB_CON_STRING: postgres://postgres:password@database:5432/bookreviews
+    command: npm run start
+
+  database:
+    build: ./database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: bookreviews
+      POSTGRES_PASSWORD: password
+
+volumes:
+  database:
+    driver: local
