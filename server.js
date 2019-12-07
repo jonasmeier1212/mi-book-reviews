@@ -2,6 +2,7 @@ const DBService = require("./app/services/database-service");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const morgan = require("morgan");
 const UserController = require("./app/controllers/users-controller");
 require("dotenv").config();
 
@@ -19,6 +20,7 @@ app.use(
     extended: false
   })
 );
+app.use(morgan("combined"));
 
 app.set("views", "app/views");
 app.set("view engine", "pug");
