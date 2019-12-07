@@ -5,6 +5,7 @@ const session = require("express-session");
 const PgSession = require("connect-pg-simple")(session);
 const morgan = require("morgan");
 const UserController = require("./app/controllers/users-controller");
+const BooksController = require("./app/controllers/books-controller");
 const { authenticated } = require("./app/middlewares/authenticated");
 require("dotenv").config();
 
@@ -30,7 +31,8 @@ app.use(morgan("combined"));
 app.set("views", "app/views");
 app.set("view engine", "pug");
 
-app.use("/user", new UserController().router);
+app.use("/users", new UserController().router);
+app.use("/books", new BooksController().router);
 
 app.get("/", authenticated, function(req, res) {
   res.render("index");

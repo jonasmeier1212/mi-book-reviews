@@ -4,8 +4,6 @@ extends _layout.pug
 
 block head
   title Login
-  style
-    include login.css
 
 block content
   .row.my-auto
@@ -18,7 +16,7 @@ block content
               for error in errors
                 li.text-danger!= error
 
-          form.form(action="/user/login", method="POST")
+          form.form(action="/users/login", method="POST")
             .form-group
               label(for="username") Benutzername:
               input#username.form-control(type="text", name="username", required)

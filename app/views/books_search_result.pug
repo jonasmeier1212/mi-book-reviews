@@ -1,0 +1,27 @@
+extends _layout.pug
+
+block head
+  title Ergebnise
+
+block content
+  .row.mt-5
+    .col
+      h1.text-center Ergebnisse
+  .row.mt-3
+    form.col.form-inline(action="/books", method="GET")
+      .form-group.flex-grow-1.mr-2
+        input.form-control.w-100(type="text", placeholder="Nach Buchtitle, Author oder ISBN suchen", name="query", value=query)
+      button.btn.btn-primary Suchen
+  .row.mt-3
+    if results && results.length > 0
+      for book in results  
+        .col-12.col-sm-6.col-md-4.my-2
+          .card
+            .card-body
+              h5.card-title #{book.title}
+              h6.card-subtitle.mb-2.text-muted #{book.author}
+              p.card-text 3/5
+              a.card-link(href=`/books/${book.id}`) Details
+    else
+      .col.my-2.text-center
+        h3 Keine Bücher gefunden!

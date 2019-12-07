@@ -4,4 +4,9 @@ block head
   title Buchbewertung
 
 block content
-  p Test
+  .row.my-auto
+    form(action="/books", method="GET").col-8.mx-auto.mb-5.text-center
+      h1.my-3 Buchsuche
+      .form-group
+        input.form-control.form-control-log(type="text", placeholder="Nach Buchtitle, Author oder ISBN suchen", name="query")
+      button.btn.btn-primary.mx-auto Suchen
