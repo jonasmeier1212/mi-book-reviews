@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS books;
-
 CREATE TABLE books (
   id SERIAL PRIMARY KEY,
 	isbn VARCHAR(10) NOT NULL UNIQUE,
@@ -7,3 +6,14 @@ CREATE TABLE books (
 	author VARCHAR NOT NULL,
 	year SMALLINT NOT NULL
 );
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+	id SERIAL PRIMARY KEY,
+	username TEXT NOT NULL UNIQUE,
+	email TEXT NOT NULL UNIQUE,
+	password_hash TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP NOT NULL
+);
+-- TODO: Create index on username!

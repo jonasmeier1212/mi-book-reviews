@@ -1,20 +1,11 @@
-var express = require("express");
-var pg = require("pg");
-var bodyParser = require("body-parser");
-var session = require("express-session");
+const DBService = require("./app/services/database-service");
+const express = require("express");
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const UserController = require("./app/controllers/users-controller");
 require("dotenv").config();
 
-var CON_STRING = process.env.DB_CON_STRING;
-if (CON_STRING === undefined) {
-  console.log("Error: Environment variable DB_CON_STRING not set!");
-  process.exit(1);
-}
-
-// pg.defaults.ssl = true;
-var dbClient = new pg.Client(CON_STRING);
-dbClient.connect();
-
-var app = express();
+const app = express();
 
 app.use(
   session({
@@ -32,10 +23,17 @@ app.use(
 app.set("views", "app/views");
 app.set("view engine", "pug");
 
+app.use("/user", new UserController().router);
+
 app.get("/", function(req, res) {
   res.render("index");
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT}`);
+// TODO: Add global error handler middleware
+
+// Wait for database initialization before starting listener
+DBService.initDB(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`Listening on port ${process.env.PORT}`);
+  });
 });

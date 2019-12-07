@@ -1,0 +1,28 @@
+extends _layout.pug
+
+
+
+block head
+  title Login
+  style
+    include login.css
+
+block content
+  .row.my-auto
+    .col-md-6.col-md-offset-3.mx-auto
+      .card
+        .card-body
+          .card-title Login
+          if errors
+            ul
+              for error in errors
+                li.text-danger!= error
+
+          form.form(action="/user/login", method="POST")
+            .form-group
+              label(for="username") Benutzername:
+              input#username.form-control(type="text", name="username", required)
+            .form-group
+              label(for="username") Passwort:
+              input#username.form-control(type="password", name="password", required)
+            button.btn.btn-primary(type="submit") Login
