@@ -3,6 +3,7 @@ function authenticated(req, res, next) {
     res.redirect("/user/login");
     return;
   }
+  console.log("Session", req.session);
   next();
 }
 

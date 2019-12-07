@@ -2,6 +2,7 @@ const DBService = require("./app/services/database-service");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const PgSession = require("connect-pg-simple")(session);
 const morgan = require("morgan");
 const UserController = require("./app/controllers/users-controller");
 const { authenticated } = require("./app/middlewares/authenticated");
@@ -11,6 +12,9 @@ const app = express();
 
 app.use(
   session({
+    store: new PgSession({
+      conString: process.env.DB_CON_STRING
+    }),
     secret: process.env.SESSION_SECRET || "sessionsecret",
     resave: true,
     saveUninitialized: false
