@@ -52,7 +52,7 @@ class UsersController {
     try {
       const validationErrors = validationResult(req);
       if (!validationErrors.isEmpty()) {
-        console.log("FOund validation errors", validationErrors);
+        console.log("Found validation errors", validationErrors);
         return res.render("login", {
           errors: validationErrors.array().map(err => err.msg)
         });
@@ -72,7 +72,7 @@ class UsersController {
         });
       }
 
-      // TODO: Start session
+      req.session.user_id = user.id;
 
       return res.redirect("/");
     } catch (e) {

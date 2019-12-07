@@ -1,16 +1,20 @@
 const DB = require("../services/database-service").DB;
 
 class User {
-  constructor(username, email, password) {
+  constructor(id, username, email, password) {
+    this.id = id;
     this.username = username.toLowerCase();
     this.email = email.toLowerCase();
     this.password = password;
   }
 
   static async create({ username, email, password }) {
-    await DB.query(`INSERT INTO users (username, email, password_hash, created_at, updated_at)
+    const res = await DB.query(`INSERT INTO users (username, email, password_hash, created_at, updated_at)
       VALUES ('${username.toLowerCase()}', '${email.toLowerCase()}', '${password}', '${new Date().toISOString()}', '${new Date().toISOString()}')`);
-    return new User(username, email, password);
+    if (!res.rowCount !== 1) {
+      throw new Error("Failed to created user! Rows count unequal to 1");
+    }
+    return new User(res.rows[0].id, username, email, password);
   }
 
   static async findByUsername(username) {
@@ -21,7 +25,7 @@ class User {
       console.warn("[Model/User] Found database invalidity! More than one user with username " + username);
     }
 
-    return new User(res.rows[0].username, res.rows[0].email, res.rows[0].password_hash);
+    return new User(res.rows[0].id, res.rows[0].username, res.rows[0].email, res.rows[0].password_hash);
   }
 }
 

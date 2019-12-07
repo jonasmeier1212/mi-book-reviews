@@ -4,13 +4,14 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const morgan = require("morgan");
 const UserController = require("./app/controllers/users-controller");
+const { authenticated } = require("./app/middlewares/authenticated");
 require("dotenv").config();
 
 const app = express();
 
 app.use(
   session({
-    secret: "This is a secret!",
+    secret: process.env.SESSION_SECRET || "sessionsecret",
     resave: true,
     saveUninitialized: false
   })
@@ -27,11 +28,9 @@ app.set("view engine", "pug");
 
 app.use("/user", new UserController().router);
 
-app.get("/", function(req, res) {
+app.get("/", authenticated, function(req, res) {
   res.render("index");
 });
-
-// TODO: Add global error handler middleware
 
 // Wait for database initialization before starting listener
 DBService.initDB(() => {
