@@ -10,9 +10,10 @@ services:
       - database
     volumes:
       - "./:/usr/src/app"
+      - /usr/src/app/node_modules
     environment:
       DB_CON_STRING: postgres://postgres:password@database:5432/bookreviews
-    command: npm run start
+    command: npm run watch
 
   database:
     build: ./database

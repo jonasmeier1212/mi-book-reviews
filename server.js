@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const PgSession = require("connect-pg-simple")(session);
 const morgan = require("morgan");
+const path = require("path");
 const UserController = require("./app/controllers/users-controller");
 const BooksController = require("./app/controllers/books-controller");
 const { authenticated } = require("./app/middlewares/authenticated");
@@ -30,6 +31,9 @@ app.use(morgan("combined"));
 
 app.set("views", "app/views");
 app.set("view engine", "pug");
+
+// Serve public assets
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", new UserController().router);
 app.use("/books", new BooksController().router);

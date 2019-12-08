@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L --inspect=0.0.0.0 server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-sass": "node-sass -r assets/scss --output public --output-style=compressed",
+    "build-babel": "babel assets/js --out-dir public --presets=@babel/preset-env",
+    "build": "npm run build-sass && npm run build-babel",
+    "watch-sass": "node-sass --watch -r assets/scss --output public --output-style=compressed",
+    "watch-babel": "babel --watch assets/js --out-dir public --presets=@babel/preset-env",
+    "watch-node": "nodemon -L --inspect=0.0.0.0 server.js",
+    "watch": "concurrently \"npm run watch-sass\" \"npm run watch-babel\" \"npm run watch-node\"",
+    "start": "npm run build && node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,10 +23,15 @@
     "express-session": "^1.15.6",
     "express-validator": "^6.3.0",
     "morgan": "^1.9.1",
+    "node-sass": "^4.13.0",
     "pg": "^7.7.1",
     "pug": "^2.0.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "concurrently": "^5.0.0",
     "csv-reader": "^1.0.3",
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0",
