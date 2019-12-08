@@ -15,7 +15,15 @@ block content
       .d-flex
         p.mr-2 3.88
         p 340 Bewertungen
-      form.form.mt-5(action=`/books/${book.id}/ratings` method="POST")
+      h4.my-3 Bewertungen
+      if ratings && ratings.length > 0
+        for rating in ratings
+          .rating
+            p #{rating.ratingText}
+      else
+        p Keine Bewertungen vorhanden!
+      form.form.mt-3(action=`/books/${book.id}/ratings` method="POST")
+        h5 Deine Bewertung
         .form-group
           include _star-rating.pug
         .form-group

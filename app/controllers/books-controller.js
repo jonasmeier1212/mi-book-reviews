@@ -1,5 +1,6 @@
 const express = require("express");
 const Book = require("../models/book");
+const Rating = require("../models/rating");
 
 class BooksController {
   constructor() {
@@ -34,9 +35,12 @@ class BooksController {
       const bookId = req.params.id;
 
       const book = await Book.findById(bookId);
+      const ratings = await Rating.listForBook(bookId);
+      console.log("Ratings", ratings);
 
       res.render("book_detail", {
-        book
+        book,
+        ratings
       });
     } catch (e) {
       res.status(500).send(e.message);

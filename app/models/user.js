@@ -10,10 +10,14 @@ class User {
 
   static async create({ username, email, password }) {
     const res = await DB.query(`INSERT INTO users (username, email, password_hash, created_at, updated_at)
-      VALUES ('${username.toLowerCase()}', '${email.toLowerCase()}', '${password}', '${new Date().toISOString()}', '${new Date().toISOString()}')`);
-    if (!res.rowCount !== 1) {
+      VALUES ('${username.toLowerCase()}', '${email.toLowerCase()}', '${password}', '${new Date().toISOString()}', '${new Date().toISOString()}')
+      RETURNING id  
+    `);
+
+    if (res.rowCount !== 1) {
       throw new Error("Failed to created user! Rows count unequal to 1");
     }
+
     return new User(res.rows[0].id, username, email, password);
   }
 

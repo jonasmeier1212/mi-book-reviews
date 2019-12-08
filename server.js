@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const path = require("path");
 const UserController = require("./app/controllers/users-controller");
 const BooksController = require("./app/controllers/books-controller");
+const RatingsController = require("./app/controllers/ratings-controller");
 const { authenticated } = require("./app/middlewares/authenticated");
 require("dotenv").config();
 
@@ -36,7 +37,8 @@ app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", new UserController().router);
-app.use("/books", new BooksController().router);
+app.use("/books", authenticated, new BooksController().router);
+app.use("/", authenticated, new RatingsController().router);
 
 app.get("/", authenticated, function(req, res) {
   res.render("index");
