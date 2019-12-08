@@ -1,0 +1,23 @@
+extends _layout.pug
+
+block head
+  title=book.title
+  link(rel="stylesheet", href="/star-rating.css")
+  script(src="https://kit.fontawesome.com/012850dab4.js", crossorigin="anonymous")
+
+block content
+  .row.mt-5
+    .col-4
+      img(src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1428439755l/5083959.jpg", alt="")
+    .col-8
+      h3 #{book.title}
+      h6.text-muted Von #{book.author}
+      .d-flex
+        p.mr-2 3.88
+        p 340 Bewertungen
+      form.form.mt-5(action=`/books/${book.id}/ratings` method="POST")
+        .form-group
+          include _star-rating.pug
+        .form-group
+          textarea.form-control#rating(name="rating_text", rows="5", required)
+        button.btn.btn-primary(type="submit") Bewerten

@@ -1,0 +1,42 @@
+$active-color: #ffd700;
+$active-highlight-color: #ffed85;
+
+.star-rating {
+  margin: 0;
+  padding: 0;
+  border: none;
+  float: left;
+
+  input {
+    display: none;
+
+    &:checked ~ label {
+      color: $active-color;
+    }
+
+    &:checked + label:hover,
+    &:checked ~ label:hover,
+    &:checked ~ label:hover ~ label {
+      color: $active-highlight-color;
+    }
+  }
+
+  label {
+    color: #ddd;
+    float: right;
+
+    &:before {
+      margin: 5px;
+      font-size: 1.25em;
+    }
+
+    &:hover ~ input:checked ~ label {
+      color: $active-highlight-color;
+    }
+  }
+
+  &:not(:checked) > label:hover,
+  &:not(:checked) > label:hover ~ label {
+    color: $active-color;
+  }
+}

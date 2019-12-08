@@ -18,7 +18,7 @@ class Book {
    * @returns {Promise<Book[]>} List of books that match the search term limited by pagination parameters
    */
   static async search(searchTerm, limit = 10, offset = 0) {
-    console.log("[Model/Book] Search for books with search term " + searchTerm);
+    console.log(`[Model/Book] Search for books with search term '${searchTerm}'`);
     /*
       Match title or author if search term is contained.
       Match ISBN only if it starts with searchterm.
@@ -54,6 +54,25 @@ class Book {
     return res.rows.map(row => {
       return new Book(row.id, row.isbn, row.title, row.author, row.year);
     });
+  }
+
+  /**
+   * @param {number} id ID of the book
+   *
+   * @returns {Promise<Book | null>} Book if found, null if not
+   */
+  static async findById(id) {
+    const res = await DB.query(`SELECT id, isbn, title, author, year FROM books WHERE id=${id} LIMIT 1;`);
+
+    if (res.rowCount === 0) return null;
+
+    return new Book(
+      res.rows[0].id,
+      res.rows[0].isbn,
+      res.rows[0].title,
+      res.rows[0].author,
+      res.rows[0].year
+    );
   }
 }
 

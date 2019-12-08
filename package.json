@@ -8,7 +8,7 @@
     "build-babel": "babel assets/js --out-dir public --presets=@babel/preset-env",
     "build": "npm run build-sass && npm run build-babel",
     "watch-sass": "node-sass --watch -r assets/scss --output public --output-style=compressed",
-    "watch-babel": "babel --watch assets/js --out-dir public --presets=@babel/preset-env",
+    "watch-babel": "babel assets/js --watch --out-dir public --presets=@babel/preset-env",
     "watch-node": "nodemon -L --inspect=0.0.0.0 server.js",
     "watch": "concurrently \"npm run watch-sass\" \"npm run watch-babel\" \"npm run watch-node\"",
     "start": "npm run build && node server.js"
