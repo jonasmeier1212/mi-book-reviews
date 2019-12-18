@@ -3,6 +3,7 @@ const DBService = require("./app/services/database-service");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const pg = require("pg");
 const PgSession = require("connect-pg-simple")(session);
 const morgan = require("morgan");
 const path = require("path");
@@ -13,10 +14,15 @@ const { authenticated } = require("./app/middlewares/authenticated");
 
 const app = express();
 
+const pgPool = new pg.Pool({
+  connectionString: process.env.DB_CON_STRING,
+  ssl: process.env.DB_USE_SSL
+});
+
 app.use(
   session({
     store: new PgSession({
-      conString: process.env.DB_CON_STRING
+      pool: pgPool
     }),
     secret: process.env.SESSION_SECRET || "sessionsecret",
     resave: true,
