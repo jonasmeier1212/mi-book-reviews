@@ -102,11 +102,19 @@ class UsersController {
       const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
       try {
-        await User.create({
+        let user = await User.findByUsername(req.body.username);
+        if (user) {
+          throw new Error("Username already taken!");
+        }
+
+        user = await User.create({
           username: req.body.username,
           email: req.body.email,
           password: hashedPassword
         });
+
+        req.session.user_id = user.id;
+        req.session.cookie.maxAge = 31556952000; // One year
       } catch (e) {
         return res.render("signup", {
           errors: [e.message]
