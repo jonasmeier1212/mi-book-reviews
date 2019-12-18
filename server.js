@@ -1,3 +1,4 @@
+require("dotenv").config();
 const DBService = require("./app/services/database-service");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -9,7 +10,6 @@ const UserController = require("./app/controllers/users-controller");
 const BooksController = require("./app/controllers/books-controller");
 const RatingsController = require("./app/controllers/ratings-controller");
 const { authenticated } = require("./app/middlewares/authenticated");
-require("dotenv").config();
 
 const app = express();
 

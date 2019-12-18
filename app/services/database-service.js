@@ -6,7 +6,10 @@ if (CON_STRING === undefined) {
   process.exit(1);
 }
 
-const DB = new pg.Client(CON_STRING);
+const DB = new pg.Client({
+  connectionString: CON_STRING,
+  ssl: process.env.DB_USE_SSL || false
+});
 
 async function initDB(done) {
   await DB.connect();
