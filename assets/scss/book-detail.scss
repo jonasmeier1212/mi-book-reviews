@@ -1,6 +1,11 @@
 $star-color: #ddd;
 $star-color-active: #ffd700;
 
+.book-cover {
+  width: 100%;
+  height: auto;
+}
+
 .rating-stars {
   display: flex;
   align-items: center;

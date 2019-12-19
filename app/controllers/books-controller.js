@@ -1,6 +1,7 @@
 const express = require("express");
 const Book = require("../models/book");
 const Rating = require("../models/rating");
+const bookCoverService = require("../services/book-cover-service");
 
 class BooksController {
   constructor() {
@@ -40,8 +41,11 @@ class BooksController {
       // Maybe it would be better to aggregate this directly in code, because all ratings are already available here...
       const avgRating = await Rating.getAverageRatingForBook(bookId);
 
+      const bookCover = await bookCoverService.getCoverForBook(book.title);
+
       res.render("book_detail", {
         book,
+        bookCover,
         ratings,
         username: req.session.username,
         avgRating: avgRating
