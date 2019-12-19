@@ -55,6 +55,15 @@ class Rating {
       return new Rating(rating.id, rating.user_id, rating.book_id, rating.rating, rating.rating_text);
     });
   }
+
+  static async getAverageRatingForBook(bookId) {
+    const res = await DB.query(`
+      SELECT AVG(rating) FROM ratings WHERE book_id=${bookId}
+    `);
+
+    const avg = res.rows[0].avg;
+    return Math.round(avg * 100) / 100;
+  }
 }
 
 module.exports = Rating;

@@ -37,11 +37,14 @@ class BooksController {
 
       const book = await Book.findById(bookId);
       const ratings = await Rating.listForBook(bookId);
+      // Maybe it would be better to aggregate this directly in code, because all ratings are already available here...
+      const avgRating = await Rating.getAverageRatingForBook(bookId);
 
       res.render("book_detail", {
         book,
         ratings,
-        username: req.session.username
+        username: req.session.username,
+        avgRating: avgRating
       });
     } catch (e) {
       res.status(500).send(e.message);
