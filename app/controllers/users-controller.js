@@ -75,7 +75,10 @@ class UsersController {
       req.session.user_id = user.id;
       req.session.cookie.maxAge = 31556952000; // One year
 
-      return res.redirect("/");
+      req.session.save(err => {
+        if (err) throw err;
+        return res.redirect("/");
+      });
     } catch (e) {
       return res.status(500).send(e.message);
     }
@@ -121,7 +124,10 @@ class UsersController {
         });
       }
 
-      return res.redirect("/");
+      req.session.save(err => {
+        if (err) throw err;
+        return res.redirect("/");
+      });
     } catch (e) {
       return res.status(500).send(e.message);
     }
