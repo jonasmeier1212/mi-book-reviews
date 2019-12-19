@@ -47,7 +47,9 @@ app.use("/books", authenticated, new BooksController().router);
 app.use("/", authenticated, new RatingsController().router);
 
 app.get("/", authenticated, function(req, res) {
-  res.render("index");
+  res.render("index", {
+    username: req.session.username
+  });
 });
 
 // Wait for database initialization before starting listener

@@ -2,11 +2,17 @@ doctype html
 html.h-100
   head
     meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
     block head
-    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css")
-    link(rel="stylesheet", href="/main.css")
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/main.css")
 
   body.h-100
+    .navbar.navbar-light.bg-light
+      a(href="/").navbar-brand Books Review
+      .navbar-text
+        span Hello #{username}
+        form.d-inline-block(action="/users/logout" method="POST")
+          button.btn.btn-link(type="submit") Logout
     .container.h-100.d-flex.flex-column
       block content

@@ -23,7 +23,8 @@ class BooksController {
 
       res.render("books_search_result", {
         query: req.query.query || "",
-        results: books
+        results: books,
+        username: req.session.username
       });
     } catch (e) {
       res.status(500).send(e.message);
