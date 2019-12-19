@@ -2,6 +2,7 @@ const express = require("express");
 const { check, validationResult, sanitizeBody } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const { authenticated } = require("../middlewares/authenticated");
 
 class UsersController {
   constructor() {
@@ -46,6 +47,8 @@ class UsersController {
       ],
       this.signup
     );
+
+    this.router.post("/logout", authenticated, this.logout);
   }
 
   async login(req, res) {
@@ -129,6 +132,18 @@ class UsersController {
       req.session.save(err => {
         if (err) throw err;
         return res.redirect("/");
+      });
+    } catch (e) {
+      return res.status(500).send(e.message);
+    }
+  }
+
+  async logout(req, res) {
+    try {
+      req.session.destroy(err => {
+        if (err) throw err;
+
+        res.redirect("/users/login");
       });
     } catch (e) {
       return res.status(500).send(e.message);
