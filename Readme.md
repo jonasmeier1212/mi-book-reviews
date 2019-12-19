@@ -13,3 +13,8 @@ The application is reachable at http://localhost:3000
 First install dependencies via `npm install`.
 Run `npm run start` to start server. The default port is 3000 so the application is reachable at http://localhost:3000
 You don't have to setup any environment variables because everything is already in the `.env` file
+
+### Test user
+
+Username: test
+Password: password123
