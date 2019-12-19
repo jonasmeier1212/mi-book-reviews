@@ -20,12 +20,13 @@ class Rating {
    */
   static async listForBook(bookId, limit = 10, offset = 0) {
     const res = await DB.query(`
-      SELECT id, user_id, book_id, rating, rating_text FROM ratings WHERE book_id=${bookId}
+      SELECT ratings.id, users.username, ratings.book_id, ratings.rating, ratings.rating_text
+      FROM ratings 
+      INNER JOIN users ON ratings.user_id=users.id
+      WHERE book_id=${bookId}
     `);
 
-    return res.rows.map(rating => {
-      return new Rating(rating.id, rating.user_id, rating.book_id, rating.rating, rating.rating_text);
-    });
+    return res.rows;
   }
 
   static async create(userId, bookId, rating, ratingText) {
