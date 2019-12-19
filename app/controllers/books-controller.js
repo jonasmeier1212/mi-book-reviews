@@ -36,11 +36,11 @@ class BooksController {
 
       const book = await Book.findById(bookId);
       const ratings = await Rating.listForBook(bookId);
-      console.log("Ratings", ratings);
 
       res.render("book_detail", {
         book,
-        ratings
+        ratings,
+        username: req.session.username
       });
     } catch (e) {
       res.status(500).send(e.message);

@@ -73,6 +73,7 @@ class UsersController {
       }
 
       req.session.user_id = user.id;
+      req.session.username = req.body.username;
       req.session.cookie.maxAge = 31556952000; // One year
 
       req.session.save(err => {
@@ -117,6 +118,7 @@ class UsersController {
         });
 
         req.session.user_id = user.id;
+        req.session.username = req.body.username;
         req.session.cookie.maxAge = 31556952000; // One year
       } catch (e) {
         return res.render("signup", {

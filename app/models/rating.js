@@ -38,7 +38,6 @@ class Rating {
     if (res.rowCount !== 1) {
       throw new Error("Failed to created rating! Rows count unequal to 1");
     }
-    console.log(res);
 
     return new Rating(res.rows[0].id, userId, bookId, rating, ratingText);
   }

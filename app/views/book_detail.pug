@@ -2,13 +2,14 @@ extends _layout.pug
 
 block head
   title=book.title
-  link(rel="stylesheet", href="/star-rating.css")
-  script(src="https://kit.fontawesome.com/012850dab4.js", crossorigin="anonymous")
+  link(rel="stylesheet" href="/star-rating.css")
+  link(rel="stylesheet" href="/book-detail.css")
+  script(src="https://kit.fontawesome.com/012850dab4.js" crossorigin="anonymous")
 
 block content
   .row.mt-5
     .col-4
-      img(src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1428439755l/5083959.jpg", alt="")
+      img(src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1428439755l/5083959.jpg" alt="")
     .col-8
       h3 #{book.title}
       h6.text-muted Von #{book.author}
@@ -19,13 +20,20 @@ block content
       if ratings && ratings.length > 0
         for rating in ratings
           .rating
+            .rating-stars
+              - let n = 0
+              while n < rating.rating
+                span.fas.fa-star.star
+                - n++
+              p.author von #{username}
             p #{rating.ratingText}
+            hr
       else
         p Keine Bewertungen vorhanden!
-      form.form.mt-3(action=`/books/${book.id}/ratings` method="POST")
+      form.form.mt-5(action=`/books/${book.id}/ratings` method="POST")
         h5 Deine Bewertung
         .form-group
           include _star-rating.pug
         .form-group
-          textarea.form-control#rating(name="rating_text", rows="5", required)
+          textarea.form-control#rating(name="rating_text" rows="5", required)
         button.btn.btn-primary(type="submit") Bewerten

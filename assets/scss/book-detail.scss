@@ -1,0 +1,18 @@
+$star-color: #ffd700;
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+
+  .star {
+    color: $star-color;
+    margin: 0 2px;
+    line-height: 1.5;
+  }
+
+  p.author {
+    margin: 0;
+    margin-left: 4px;
+  }
+}
